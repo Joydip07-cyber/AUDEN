@@ -1,0 +1,210 @@
+name: Build and Release AUDEN
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., v2.0.1)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.15'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller psutil
+
+      - name: Run tests
+        run: |
+          python tests/test_code.py
+          python tests/test_agent.py
+          python tests/test_confirm.py
+          Remove-Item data/tmp_test -Recurse -Force -ErrorAction SilentlyContinue
+
+      - name: Build with PyInstaller
+        run: |
+          python -m PyInstaller --noconfirm --clean `
+            --workpath build/pyinstaller `
+            --distpath dist `
+            AUDEN.spec
+
+      - name: Copy docs to app bundle
+        run: |
+          Copy-Item README.md, LICENSE, PRIVACY.md, SECURITY.md, THIRD_PARTY_NOTICES.md dist/AUDEN -Force
+
+      - name: Install Inno Setup
+        run: |
+          choco install innosetup --version 6.7.3 -y
+
+      - name: Build installer
+        run: |
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          & $iscc installer/AUDEN.iss
+
+      - name: Generate SHA256
+        id: hash
+        run: |
+          $installer = Get-ChildItem dist/installer/AUDEN-Setup-*.exe | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          $hash = (Get-FileHash $installer.FullName -Algorithm SHA256).Hash
+          "$hash  $($installer.Name)" | Set-Content dist/installer/SHA256SUMS.txt -Encoding ascii
+          echo "hash=$hash" >> $env:GITHUB_OUTPUT
+          echo "installer=$($installer.Name)" >> $env:GITHUB_OUTPUT
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AUDEN-installer
+          path: dist/installer/AUDEN-Setup-*.exe
+          retention-days: 30
+
+      - name: Upload SHA256SUMS
+        uses: actions/upload-artifact@v4
+        with:
+          name: SHA256SUMS
+          path: dist/installer/SHA256SUMS.txt
+          retention-days: 30
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Download installer artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: AUDEN-installer
+          path: release/
+
+      - name: Download SHA256SUMS
+        uses: actions/download-artifact@v4
+        with:
+          name: SHA256SUMS
+          path: release/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release/AUDEN-Setup-*.exe
+            release/SHA256SUMS.txt
+          body: |
+            ## AUDEN ${{ github.ref_name }}
+
+            **One-click install:** Download `AUDEN-Setup-${{ github.ref_name }}.exe`, run it, and follow the setup wizard.
+
+            ### What's included
+            - AUDEN desktop app (Edge WebView2 HUD + local stdlib server)
+            - First-run setup wizard (detects/reuses Ollama or installs private engine)
+            - Desktop & Start Menu shortcuts
+            - Optional auto-start on login
+
+            ### Requirements
+            - Windows 10/11 64-bit
+            - 8 GB RAM minimum, 16 GB recommended
+            - ~5 GB free disk space
+            - Internet for first-run only (downloads engine & model)
+
+            ### Verify your download
+            ```
+            ${{ steps.hash.outputs.hash }}  ${{ steps.hash.outputs.installer }}
+            ```
+
+            ### After install
+            1. Launch **AUDEN** from desktop/Start Menu
+            2. Complete the setup wizard (name, city, model choice)
+            3. The HUD opens — click the mic or press `Alt+Space` and talk
+
+            ### Source
+            Built from `${{ github.sha }}`.
+          draft: false
+          prerelease: false
+
+  winget:
+    needs: release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Checkout winget-pkgs (for PR)
+        uses: actions/checkout@v4
+        with:
+          repository: microsoft/winget-pkgs
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: winget-pkgs
+          sparse-checkout: |
+            manifests/a/AUDEN/AUDEN
+
+      - name: Prepare winget manifest
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          MANIFEST_DIR="winget-pkgs/manifests/a/AUDEN/AUDEN/$VERSION"
+          mkdir -p "$MANIFEST_DIR"
+          
+          # Download installer to get SHA256
+          curl -L -o installer.exe "https://github.com/${{ github.repository }}/releases/download/${GITHUB_REF_NAME}/AUDEN-Setup-${GITHUB_REF_NAME}.exe"
+          SHA256=$(sha256sum installer.exe | cut -d' ' -f1)
+          
+          cat > "$MANIFEST_DIR/AUDEN.installer.yaml" <<EOF
+          PackageIdentifier: AUDEN.AUDEN
+          PackageVersion: $VERSION
+          InstallerType: inno
+          InstallerUrl: https://github.com/${{ github.repository }}/releases/download/${GITHUB_REF_NAME}/AUDEN-Setup-${GITHUB_REF_NAME}.exe
+          InstallerSha256: $SHA256
+          Scope: user
+          InstallerSwitches:
+            Silent: /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
+            SilentWithProgress: /SILENT /SUPPRESSMSGBOXES /NORESTART
+          UpgradeBehavior: install
+          EOF
+          
+          cat > "$MANIFEST_DIR/AUDEN.locale.en-US.yaml" <<EOF
+          PackageIdentifier: AUDEN.AUDEN
+          PackageVersion: $VERSION
+          PackageName: AUDEN
+          Publisher: AUDEN Project
+          License: MIT
+          ShortDescription: Local desktop AI with holographic HUD and voice control
+          Tags:
+          - ai
+          - assistant
+          - local-llm
+          - ollama
+          - voice
+          ReleaseNotes: See https://github.com/${{ github.repository }}/releases/tag/${GITHUB_REF_NAME}
+          EOF
+          
+          echo "Manifest created at $MANIFEST_DIR"
+          ls -la "$MANIFEST_DIR"
+
+      - name: Create winget PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repo: microsoft/winget-pkgs
+          title: "AUDEN.AUDEN ${{ github.ref_name }}"
+          body: |
+            Automated winget manifest for AUDEN ${{ github.ref_name }}.
+            
+            Installer: https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/AUDEN-Setup-${{ github.ref_name }}.exe
+          branch: auden-${{ github.ref_name }}
+          base: master
+          commit-message: "Add AUDEN.AUDEN ${{ github.ref_name }}"
+          delete-branch: true

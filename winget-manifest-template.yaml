@@ -1,0 +1,66 @@
+# winget manifest template for AUDEN
+# 
+# To submit to winget:
+# 1. Fork https://github.com/microsoft/winget-pkgs
+# 2. Create folder: manifests/a/AUDEN/AUDEN/<version>/
+# 3. Add these two files (replace VERSION and SHA256)
+# 4. Open a PR
+
+---
+# File: manifests/a/AUDEN/AUDEN/<VERSION>/AUDEN.installer.yaml
+PackageIdentifier: AUDEN.AUDEN
+PackageVersion: <VERSION>
+InstallerType: inno
+InstallerUrl: https://github.com/YOUR_USERNAME/AUDEN/releases/download/v<VERSION>/AUDEN-Setup-<VERSION>.exe
+InstallerSha256: <SHA256_OF_INSTALLER>
+Scope: user
+InstallerSwitches:
+  Silent: /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
+  SilentWithProgress: /SILENT /SUPPRESSMSGBOXES /NORESTART
+UpgradeBehavior: install
+
+---
+# File: manifests/a/AUDEN/AUDEN/<VERSION>/AUDEN.locale.en-US.yaml
+PackageIdentifier: AUDEN.AUDEN
+PackageVersion: <VERSION>
+PackageName: AUDEN
+Publisher: AUDEN Project
+License: MIT
+LicenseUrl: https://github.com/YOUR_USERNAME/AUDEN/blob/main/LICENSE
+ShortDescription: Local desktop AI with holographic HUD and voice control
+Description: |
+  AUDEN is a voice-driven local AI assistant for Windows. It runs a holographic HUD
+  (Edge in --app mode), connects to a local Ollama engine, and provides real
+  Windows automation through a stdlib HTTP/SSE server.
+
+  Features:
+  - Voice control with wake word ("Auden…") and push-to-talk (Alt+Space)
+  - Holographic WebGL HUD with full/mini/orb modes
+  - Local LLM via Ollama (reuses system install or private engine)
+  - 22 tools: system info, file ops, browser, code, web search, memory, timers
+  - Offline reflex layer for instant commands
+  - Approval cards for destructive actions
+  - SQLite memory persists across restarts
+  - No cloud, no account, no API key required
+Tags:
+- ai
+- assistant
+- local-llm
+- ollama
+- voice
+- windows
+- privacy
+ReleaseNotes: See https://github.com/YOUR_USERNAME/AUDEN/releases/tag/v<VERSION>
+ReleaseNotesUrl: https://github.com/YOUR_USERNAME/AUDEN/releases/tag/v<VERSION>
+PurchaseUrl: https://github.com/YOUR_USERNAME/AUDEN
+InstallationNotes: |
+  The installer is per-user (no admin required). On first launch, a setup wizard
+  downloads the Ollama engine (~1.6 GB) and a model (~2–5 GB). Internet required
+  only for first run.
+Documentations:
+- DocumentLabel: README
+  DocumentUrl: https://github.com/YOUR_USERNAME/AUDEN/blob/main/README.md
+- DocumentLabel: Privacy Policy
+  DocumentUrl: https://github.com/YOUR_USERNAME/AUDEN/blob/main/PRIVACY.md
+- DocumentLabel: Security Policy
+  DocumentUrl: https://github.com/YOUR_USERNAME/AUDEN/blob/main/SECURITY.md

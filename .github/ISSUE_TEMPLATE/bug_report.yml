@@ -1,0 +1,33 @@
+---
+name: Bug Report
+title: "[Bug] "
+labels: ["bug"]
+assignees: []
+---
+**Describe the bug**
+A clear and concise description of what the bug is.
+
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error
+
+**Expected behavior**
+A clear and concise description of what you expected to happen.
+
+**Logs**
+If applicable, attach relevant log files:
+- `%LOCALAPPDATA%\AUDEN\logs\auden.log`
+- `%LOCALAPPDATA%\AUDEN\logs\ollama.log` (if using private engine)
+
+**Environment**
+- OS: [e.g., Windows 11 23H2]
+- RAM: [e.g., 16 GB]
+- AUDEN version: [e.g., 2.0.0]
+- Install type: [Installer / Portable / Source]
+- Ollama: [System / Private / Version]
+
+**Additional context**
+Add any other context about the problem here.
