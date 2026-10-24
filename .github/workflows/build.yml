@@ -53,8 +53,9 @@ jobs:
           Copy-Item README.md, LICENSE, PRIVACY.md, SECURITY.md, THIRD_PARTY_NOTICES.md dist/AUDEN -Force
 
       - name: Install Inno Setup
-        run: |
-          choco install innosetup --version 6.7.3 -y
+        uses: karelics/setup-innosetup@v1
+        with:
+          version: 6.7.3
 
       - name: Build installer
         run: |
