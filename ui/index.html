@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="auden-token" content="__TOKEN__" />
+<title>A.U.D.E.N</title>
+<link rel="stylesheet" href="/ui/hud.css" />
+<script>
+  /* Pick the layout before first paint so the window never flashes the wrong mode. */
+  (function () {
+    var q = new URLSearchParams(location.search).get('mode');
+    var m = q || localStorage.getItem('auden.mode') || 'full';
+    if (['full', 'mini', 'orb'].indexOf(m) < 0) m = 'full';
+    document.documentElement.dataset.mode = m;
+  })();
+</script>
+</head>
+<body>
+<div class="vignette"></div>
+
+<div class="frame">
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◈</span>
+      <span class="brand-name">A.U.D.E.N</span>
+      <span class="brand-sub">MK&nbsp;II</span>
+    </div>
+
+    <div class="status-cluster">
+      <span class="pill" id="pillCore"><i></i>CORE</span>
+      <span class="pill" id="pillMic"><i></i>MIC</span>
+      <span class="pill" id="pillLink"><i></i>LINK</span>
+      <span class="pill" id="pillVoice"><i></i>VOICE</span>
+    </div>
+
+    <button class="mode-btn" id="modeBtn" type="button" title="Switch window mode (Alt+M)">MINI</button>
+
+    <div class="clockbox">
+      <div class="clock" id="clock">--:--:--</div>
+      <div class="date" id="date">—</div>
+    </div>
+  </header>
+
+  <main class="stage-grid">
+    <aside class="rail left">
+      <section class="card">
+        <h3>SYSTEM</h3>
+        <div class="meter" id="mCpu">
+          <div class="meter-top"><span>CPU</span><b>0%</b></div>
+          <div class="track"><div class="fill"></div></div>
+        </div>
+        <div class="meter" id="mRam">
+          <div class="meter-top"><span>MEMORY</span><b>0%</b></div>
+          <div class="track"><div class="fill"></div></div>
+        </div>
+        <div class="meter" id="mDisk">
+          <div class="meter-top"><span>STORAGE</span><b>0%</b></div>
+          <div class="track"><div class="fill"></div></div>
+        </div>
+        <div class="kv"><span>BATTERY</span><b id="battery">—</b></div>
+        <div class="kv"><span>UPTIME</span><b id="uptime">00:00:00</b></div>
+      </section>
+
+      <section class="card">
+        <h3>COGNITION</h3>
+        <div class="kv"><span>MODEL</span><b id="model">—</b></div>
+        <div class="kv"><span>TOOLS</span><b id="tools">—</b></div>
+        <div class="kv"><span>MEMORIES</span><b id="facts">—</b></div>
+        <div class="kv"><span>BACKEND</span><b id="backend">OLLAMA</b></div>
+      </section>
+
+      <section class="card grow">
+        <h3>MODULES</h3>
+        <div class="modules" id="modules"></div>
+      </section>
+    </aside>
+
+    <section class="stage">
+      <div class="orb-wrap">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+        <div class="ticks"></div>
+        <canvas id="orb"></canvas>
+        <div class="orb-core"></div>
+      </div>
+
+      <div class="state" id="stateLabel">STANDBY</div>
+      <div class="subtitle" id="subtitle">Online and awaiting instruction.</div>
+      <div class="heard" id="heard"></div>
+    </section>
+
+    <aside class="rail right">
+      <section class="card feed-card">
+        <h3>ACTIVITY <span class="count" id="feedCount">0</span></h3>
+        <div class="feed" id="feed"></div>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="dock">
+    <button class="round" id="micBtn" aria-label="Toggle microphone">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7">
+        <path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/>
+        <path d="M5 11a7 7 0 0 0 14 0M12 18v3M8.5 21h7"/>
+      </svg>
+    </button>
+
+    <form id="chatForm" autocomplete="off">
+      <span class="prompt">&gt;</span>
+      <input id="chatInput" placeholder="Type a command, or press Alt+Space to speak…" />
+    </form>
+
+    <button class="ghost" id="voiceBtn">VOICE ON</button>
+    <button class="primary" id="sendBtn" type="submit" form="chatForm">SEND</button>
+  </footer>
+</div>
+
+<div class="scanlines"></div>
+
+<div class="confirm-layer" id="confirmLayer" hidden>
+  <div class="confirm-card">
+    <div class="confirm-head">AUTHORISATION REQUIRED</div>
+    <div class="confirm-body" id="confirmBody"></div>
+    <div class="confirm-actions">
+      <button class="ghost" id="confirmNo">DENY</button>
+      <button class="primary" id="confirmYes">AUTHORISE</button>
+    </div>
+  </div>
+</div>
+
+<script>window.__BOOT__ = __BOOT_DATA__;</script>
+<script src="/ui/orb.js"></script>
+<script src="/ui/hud.js"></script>
+</body>
+</html>

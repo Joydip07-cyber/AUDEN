@@ -1,0 +1,26 @@
+data/
+config.json
+__pycache__/
+*.pyc
+*.pyo
+*.log
+*.db
+*.db-wal
+*.db-shm
+OllamaSetup.exe
+data/window-profile/
+
+# build output
+dist/
+build/pyinstaller/
+
+# local environments
+.venv/
+venv/
+.env
+
+# editor / OS noise
+.idea/
+.vscode/
+Thumbs.db
+desktop.ini

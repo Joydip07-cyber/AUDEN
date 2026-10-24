@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="auden-token" content="__TOKEN__" />
+<title>A.U.D.E.N Setup</title>
+<link rel="stylesheet" href="/ui/setup.css" />
+</head>
+<body>
+<div class="vignette"></div>
+<main class="shell">
+  <aside class="brandpane">
+    <div class="orb" aria-hidden="true"><span class="ring"></span><span class="core"></span></div>
+    <div class="brand">A.U.D.E.N</div>
+    <div class="tag">LOCAL COGNITIVE SYSTEM</div>
+    <p class="brand-copy">A private assistant that runs on your machine.<br />No cloud account. No API keys.</p>
+    <div class="brand-meta"><span>FIRST RUN</span><b>v__VERSION__</b></div>
+  </aside>
+
+  <section class="panel">
+    <div class="steps" id="stepBar">
+      <span data-step="1" class="active">System</span>
+      <span data-step="2">Engine</span>
+      <span data-step="3">Profile</span>
+      <span data-step="4">Ready</span>
+    </div>
+
+    <section class="step" id="step-check">
+      <h1>Before we begin</h1>
+      <p class="lead">AUDEN needs a local AI engine and a model. I will check this PC and set everything up for you.</p>
+      <div class="stat-grid">
+        <div class="stat"><span>MEMORY</span><b id="statRam">...</b></div>
+        <div class="stat"><span>DISK FREE</span><b id="statDisk">...</b></div>
+        <div class="stat"><span>OLLAMA</span><b id="statOllama">...</b></div>
+        <div class="stat"><span>MODEL</span><b id="statModel">...</b></div>
+      </div>
+      <div class="notice" id="scanNotice">Checking your system...</div>
+      <div class="actions"><button class="primary" id="toEngine" disabled>Continue</button></div>
+    </section>
+
+    <section class="step hidden" id="step-engine">
+      <h1>Choose your engine</h1>
+      <p class="lead">Use the Ollama already on this PC, or let AUDEN install a private copy in your user folder.</p>
+      <div class="choice-list" id="engineChoices"></div>
+      <h2>Choose a model</h2>
+      <div class="model-grid" id="modelChoices"></div>
+      <div class="notice" id="engineNotice">The model is downloaded once and stored on this PC.</div>
+      <div class="actions">
+        <button class="ghost" id="backCheck">Back</button>
+        <button class="primary" id="startInstall">Install &amp; continue</button>
+      </div>
+    </section>
+
+    <section class="step hidden" id="step-install">
+      <h1>Preparing your core</h1>
+      <p class="lead" id="installLead">This can take a while on a slow connection. Leave this window open.</p>
+      <div class="bar"><span id="barFill"></span></div>
+      <div class="progress-meta"><span id="progressStage">STARTING</span><b id="progressPct">0%</b></div>
+      <div class="install-message" id="installMessage">Checking your PC...</div>
+      <div class="log" id="installLog"></div>
+      <div class="notice error hidden" id="installError"></div>
+      <div class="actions">
+        <button class="ghost hidden" id="retryInstall">Retry</button>
+        <button class="ghost hidden" id="cancelInstall">Cancel</button>
+      </div>
+    </section>
+
+    <section class="step hidden" id="step-profile">
+      <h1>Make it yours</h1>
+      <p class="lead">AUDEN runs locally. These details stay on this machine.</p>
+      <div class="form-grid">
+        <label>WHAT SHOULD I CALL YOU?<input id="nameInput" maxlength="40" placeholder="sir" autocomplete="off" /></label>
+        <label>YOUR CITY <span>(optional, for weather)</span><input id="cityInput" maxlength="80" placeholder="London" autocomplete="off" /></label>
+      </div>
+      <div class="row">
+        <div class="seg" id="unitSeg">
+          <button type="button" data-unit="metric" class="on">°C · Metric</button>
+          <button type="button" data-unit="imperial">°F · Imperial</button>
+        </div>
+        <label class="check"><input type="checkbox" id="voiceToggle" checked /> Speak replies aloud</label>
+      </div>
+      <div class="mic-box">
+        <div><b>Microphone check</b><span id="micHint">Optional. Voice input uses the browser's speech recognition.</span></div>
+        <button class="ghost small" type="button" id="micTest">Test mic</button>
+        <div class="mic-meter"><span id="micLevel"></span></div>
+      </div>
+      <div class="notice hidden" id="profileError"></div>
+      <div class="actions"><button class="primary" id="finishSetup">Enter AUDEN</button></div>
+    </section>
+
+    <section class="step hidden" id="step-done">
+      <div class="checkmark">✓</div>
+      <h1>All systems online</h1>
+      <p class="lead">AUDEN is starting now. Say <b>"Hey AUDEN"</b> or type a message.</p>
+      <div class="notice">Tip: use the MINI button or <b>Alt+M</b> for the small Cortana-style window.</div>
+    </section>
+  </section>
+</main>
+<script src="/ui/setup.js"></script>
+</body>
+</html>

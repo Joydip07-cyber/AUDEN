@@ -1,0 +1,28 @@
+# UTF-8
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(2, 0, 0, 0),
+    prodvers=(2, 0, 0, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+  ),
+  kids=[
+    StringFileInfo([
+      StringTable(
+        u'040904B0',
+        [StringStruct(u'CompanyName', u'AUDEN Project'),
+         StringStruct(u'FileDescription', u'AUDEN - local AI assistant'),
+         StringStruct(u'FileVersion', u'2.0.0'),
+         StringStruct(u'InternalName', u'AUDEN'),
+         StringStruct(u'LegalCopyright', u'Copyright (c) 2026 AUDEN contributors'),
+         StringStruct(u'OriginalFilename', u'AUDEN.exe'),
+         StringStruct(u'ProductName', u'AUDEN'),
+         StringStruct(u'ProductVersion', u'2.0.0')])
+    ]),
+    VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
+  ]
+)

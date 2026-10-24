@@ -1,0 +1,65 @@
+{
+  "app": {
+    "setup_complete": false,
+    "idle_timeout": 1800
+  },
+  "identity": {
+    "assistant_name": "AUDEN",
+    "user_name": "sir",
+    "persona": "You are AUDEN, a dry-witted British AI butler and systems assistant. You are calm, precise, quietly loyal and occasionally sardonic. Address the user as 'sir'. Never mention being a language model."
+  },
+  "brain": {
+    "provider": "ollama",
+    "host": "http://127.0.0.1:11434",
+    "model": "qwen3:4b",
+    "fallback_models": ["qwen3:4b", "qwen2.5:3b", "llama3.2:3b"],
+    "tool_mode": "auto",
+    "temperature": 0.55,
+    "num_ctx": 3072,
+    "max_tokens": 320,
+    "code_max_tokens": 900,
+    "keep_alive": "30m",
+    "core_tools_only": true,
+    "auto_fallback": false,
+    "openai": {
+      "base_url": "http://127.0.0.1:1234/v1",
+      "api_key": "local",
+      "model": ""
+    }
+  },
+  "voice": {
+    "enabled": true,
+    "lang": "en-GB",
+    "preferred_voices": ["Ryan", "George", "Daniel", "Guy"],
+    "rate": 1.04,
+    "pitch": 0.86,
+    "volume": 1.0
+  },
+  "wake": {
+    "enabled": true,
+    "words": ["auden", "hey auden", "okay auden"],
+    "require_wake_word": false
+  },
+  "safety": {
+    "allow_shell": true,
+    "confirm_tools": ["run_command", "write_file", "lock_pc", "type_text"],
+    "workspace": "%USERPROFILE%\\Documents\\AUDEN",
+    "write_roots": [
+      "%USERPROFILE%\\Documents\\AUDEN",
+      "%USERPROFILE%\\Desktop",
+      "%USERPROFILE%\\Documents",
+      "%USERPROFILE%\\Downloads",
+      "%TEMP%"
+    ],
+    "read_anywhere": true
+  },
+  "ui": {
+    "start_mode": "full",
+    "accent": "#37d8ff",
+    "greet_on_start": true
+  },
+  "location": {
+    "city": "",
+    "units": "metric"
+  }
+}
