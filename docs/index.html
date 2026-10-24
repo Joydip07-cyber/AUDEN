@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AUDEN — Local Desktop AI for Windows</title>
+  <title>AUDEN â€” Local Desktop AI for Windows</title>
   <meta name="description" content="A voice-driven assistant with a holographic HUD, local LLM (Ollama), and real Windows control. No cloud, no account, no API key.">
   <style>
     :root { --accent: #37d8ff; --bg: #0a0f14; --card: #111920; --text: #e8eef4; --muted: #7a8a9a; }
@@ -36,7 +36,7 @@
   </style>
 </head>
 <body>
-  <a class="github-corner" href="https://github.com/YOUR_USERNAME/AUDEN" target="_blank" aria-label="View source on GitHub">
+  <a class="github-corner" href="https://github.com/Joydip07-cyber/AUDEN" target="_blank" aria-label="View source on GitHub">
     <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#37d8ff; color:#0a0f14;">
       <path d="M248.75,89.74c-8.07,16.93-21.11,41.38-29.51,66.37c-16.62-5.07-34.94-11.77-51.52-19.67c5.84-10.78,9.23-24.24,9.23-36.65c0-32.03-25.98-58-58-58c-26.03,0-47.55,16.92-55.3,39.78C58.57,5.99,36.32,7.66,17.08,13.21C7.43,24.32,3.38,51.4,8.54,79.36c1.72,8.79,7.47,15.81,14.7,18.15c-5.27,6.28-7.7,15.37-7.7,25.97c0,22.06,17.95,40,40,40c11.45,0,22-4.14,30.04-11.02c4.47,0.74,9.02,1.07,13.49,1.07c26.75,0,48.47-21.72,48.47-48.47c0-2.64-0.15-5.25-0.42-7.81C229.25,122.39,242.55,104.02,248.75,89.74z"></path>
     </svg>
@@ -52,8 +52,8 @@
         <span class="badge">MIT License</span>
         <span class="badge">No account required</span>
       </div>
-      <a class="btn" href="https://github.com/YOUR_USERNAME/AUDEN/releases/latest" id="downloadBtn">Download Installer</a>
-      <a class="btn btn-secondary" href="https://github.com/YOUR_USERNAME/AUDEN" target="_blank">View Source</a>
+      <a class="btn" href="https://github.com/Joydip07-cyber/AUDEN/releases/latest" id="downloadBtn">Download Installer</a>
+      <a class="btn btn-secondary" href="https://github.com/Joydip07-cyber/AUDEN" target="_blank">View Source</a>
     </header>
 
     <main>
@@ -63,8 +63,8 @@
         <div class="grid">
           <div class="card"><h3>1. Run the installer</h3><p>Per-user install, no admin rights. Creates desktop & Start Menu shortcuts.</p></div>
           <div class="card"><h3>2. Launch AUDEN</h3><p>The setup wizard opens automatically. It detects an existing Ollama or downloads a private engine.</p></div>
-          <div class="card"><h3>3. Pick a model</h3><p>Recommended for your RAM. Existing models are reused — no duplicate downloads.</p></div>
-          <div class="card"><h3>4. Start talking</h3><p>The HUD opens. Click the mic, say "Auden…" or hold <kbd>Alt+Space</kbd> for push-to-talk.</p></div>
+          <div class="card"><h3>3. Pick a model</h3><p>Recommended for your RAM. Existing models are reused â€” no duplicate downloads.</p></div>
+          <div class="card"><h3>4. Start talking</h3><p>The HUD opens. Click the mic, say "Audenâ€¦" or hold <kbd>Alt+Space</kbd> for push-to-talk.</p></div>
         </div>
       </section>
 
@@ -72,8 +72,8 @@
         <h2>What It Does</h2>
         <div class="grid">
           <div class="card"><h3>System</h3><p>CPU/RAM/disk stats, screenshots, volume, lock PC, open apps/folders</p></div>
-          <div class="card"><h3>Browser</h3><p>Opens URLs in your <em>default</em> browser (Brave, Chrome, Firefox, Edge…)</p></div>
-          <div class="card"><h3>Files</h3><p>Find, read, write files — restricted to your chosen folders</p></div>
+          <div class="card"><h3>Browser</h3><p>Opens URLs in your <em>default</em> browser (Brave, Chrome, Firefox, Edgeâ€¦)</p></div>
+          <div class="card"><h3>Files</h3><p>Find, read, write files â€” restricted to your chosen folders</p></div>
           <div class="card"><h3>Code</h3><p>Write, explain, fix code. Saves to file with approval.</p></div>
           <div class="card"><h3>Web</h3><p>Weather, search, fetch & summarize URLs</p></div>
           <div class="card"><h3>Memory</h3><p>Remembers facts across sessions (local SQLite)</p></div>
@@ -85,20 +85,20 @@
       <section>
         <h2>Privacy & Safety</h2>
         <ul style="margin-left: 1.5rem; color: var(--muted);">
-          <li><strong>100% local</strong> — model, memory, and voice never leave your PC</li>
-          <li><strong>No accounts, no API keys</strong> — works completely offline after first setup</li>
-          <li><strong>Destructive tools require approval</strong> — <code>run_command</code>, <code>write_file</code>, <code>lock_pc</code>, <code>type_text</code> show a confirmation card</li>
-          <li><strong>File writes sandboxed</strong> — only to folders you configure in <code>safety.write_roots</code></li>
-          <li><strong>Shell can be disabled</strong> — <code>"allow_shell": false</code></li>
-          <li><strong>Server binds to 127.0.0.1 only</strong> — per-launch session token on every request</li>
+          <li><strong>100% local</strong> â€” model, memory, and voice never leave your PC</li>
+          <li><strong>No accounts, no API keys</strong> â€” works completely offline after first setup</li>
+          <li><strong>Destructive tools require approval</strong> â€” <code>run_command</code>, <code>write_file</code>, <code>lock_pc</code>, <code>type_text</code> show a confirmation card</li>
+          <li><strong>File writes sandboxed</strong> â€” only to folders you configure in <code>safety.write_roots</code></li>
+          <li><strong>Shell can be disabled</strong> â€” <code>"allow_shell": false</code></li>
+          <li><strong>Server binds to 127.0.0.1 only</strong> â€” per-launch session token on every request</li>
         </ul>
       </section>
 
       <section>
         <h2>Requirements</h2>
         <div class="grid">
-          <div class="card"><h3>Minimum</h3><p>Windows 10 64-bit · 8 GB RAM · 5 GB disk · Internet (first run only)</p></div>
-          <div class="card"><h3>Recommended</h3><p>Windows 11 · 16 GB RAM · SSD · GPU (for faster inference)</p></div>
+          <div class="card"><h3>Minimum</h3><p>Windows 10 64-bit Â· 8 GB RAM Â· 5 GB disk Â· Internet (first run only)</p></div>
+          <div class="card"><h3>Recommended</h3><p>Windows 11 Â· 16 GB RAM Â· SSD Â· GPU (for faster inference)</p></div>
         </div>
       </section>
 
@@ -110,7 +110,7 @@
   "model": "qwen3:8b",
   "fallback_models": ["qwen3:4b", "qwen2.5:3b"]
 }</pre>
-        <h3 style="margin: 1.5rem 0 0.5rem;">Use an OpenAI-compatible backend (LM Studio, Groq, vLLM…)</h3>
+        <h3 style="margin: 1.5rem 0 0.5rem;">Use an OpenAI-compatible backend (LM Studio, Groq, vLLMâ€¦)</h3>
         <pre class="code"><span class="comment"># config.json</span>
 "brain": {
   "provider": "openai",
@@ -134,8 +134,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build.ps1
     </main>
 
     <footer>
-      <p>AUDEN — MIT Licensed · Built with Python, Ollama, and Edge WebView2</p>
-      <p><a href="https://github.com/YOUR_USERNAME/AUDEN">GitHub</a> · <a href="PRIVACY.md">Privacy</a> · <a href="SECURITY.md">Security</a> · <a href="LICENSE">License</a></p>
+      <p>AUDEN â€” MIT Licensed Â· Built with Python, Ollama, and Edge WebView2</p>
+      <p><a href="https://github.com/Joydip07-cyber/AUDEN">GitHub</a> Â· <a href="PRIVACY.md">Privacy</a> Â· <a href="SECURITY.md">Security</a> Â· <a href="LICENSE">License</a></p>
     </footer>
   </div>
 </body>
